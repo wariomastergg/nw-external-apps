@@ -4,6 +4,7 @@
 #include <extapp_api.h>
 #include <stdlib.h>
 #include <math.h>
+#include <.h>
 
 //-----------------------------MAP----------------------------------------------
 #define mapX  8      //map width
