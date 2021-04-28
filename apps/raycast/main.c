@@ -1,9 +1,8 @@
 //------------------------YouTube-3DSage----------------------------------------
 //Full video: https://www.youtube.com/watch?v=gYRrGTC7GtA 
-//WADS to move player.
 
+#include <extapp_api.h>
 #include <stdlib.h>
-#include <GL/glut.h>
 #include <math.h>
 
 //-----------------------------MAP----------------------------------------------
@@ -57,11 +56,10 @@ void drawPlayer2D()
 
 void Buttons(unsigned char key,int x,int y)
 {
- if(key=='a'){ pa+=5; pa=FixAng(pa); pdx=cos(degToRad(pa)); pdy=-sin(degToRad(pa));} 	
- if(key=='d'){ pa-=5; pa=FixAng(pa); pdx=cos(degToRad(pa)); pdy=-sin(degToRad(pa));} 
- if(key=='w'){ px+=pdx*5; py+=pdy*5;}
- if(key=='s'){ px-=pdx*5; py-=pdy*5;}
- glutPostRedisplay();
+ if (k & SCANCODE_Left){ pa+=5; pa=FixAng(pa); pdx=cos(degToRad(pa)); pdy=-sin(degToRad(pa));} 	
+ if (k & SCANCODE_Right){ pa-=5; pa=FixAng(pa); pdx=cos(degToRad(pa)); pdy=-sin(degToRad(pa));} 
+ if (k & SCANCODE_Up){ px+=pdx*5; py+=pdy*5;}
+ if (k & SCANCODE_Down){ px-=pdx*5; py-=pdy*5;}
 }//-----------------------------------------------------------------------------
 
 
@@ -144,10 +142,10 @@ int extapp_main(int argc, char* argv[])
 { 
  glutInit(&argc, argv);
  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
- glutInitWindowSize(1024,510);
- glutCreateWindow("YouTube-3DSage");
  init();
  glutDisplayFunc(display);
- glutKeyboardFunc(Buttons);
+ unsigned int i = 0, j = 0, k = 0;
+ uint64_t k = extapp_scanKeyboard();
+ Buttons();
  glutMainLoop();
 }
